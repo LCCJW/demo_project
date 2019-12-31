@@ -1,44 +1,44 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
-  root 'pages#landingpage'
+  root "pages#introduction"
 
   resources :pages, only: [:index] do
     collection do
       get :newfav
       get :landingpage
+      get :introduction
     end
-  end  #for landingpage
-
+  end
 
   namespace :api do
     resources :animals, only: [] do
       member do
-        post :favorite # /api/animals/:id/favorite
+        post :favorite
       end
     end
   end
 
-  resources :searches, only: [:index, :show] do #for search function
+  resources :searches, only: [:index, :show] do
     collection do
       get :simple
       get :advance
     end
   end
 
-  resources :favorites #for favorite function
+  resources :favorites
 
-  resources :reservations do  #for reservation function
+  resources :reservations do
     member do
       delete :cancel
     end
   end
 
-  resource :calander  #for reservation calander function
+  resource :calander
   resources :messages
 
   namespace :sender do
-    root 'pages#index'
+    root "pages#index"
     resources :reservations do
       member do
         delete :cancel
@@ -46,5 +46,4 @@ Rails.application.routes.draw do
     end
     resource :calander
   end
-
 end
