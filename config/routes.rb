@@ -28,7 +28,11 @@ Rails.application.routes.draw do
 
   resources :favorites
 
+
   resources :reservations do
+    collection do
+      get :testfav
+    end
     member do
       delete :cancel
     end
@@ -42,8 +46,16 @@ Rails.application.routes.draw do
     resources :reservations do
       member do
         delete :cancel
+        post :confirm
+        post :cancel_adopt
+        post :adopt
       end
+      resources :reservation_pets
     end
+    resources :animals do
+      delete '/images/:image_id' => 'animals#destroy_image', as: :destroy_image, on: :member
+    end
+    resource :user
     resource :calander
   end
 end
